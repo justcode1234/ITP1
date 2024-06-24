@@ -2,6 +2,9 @@
 
 The Game Project Part 4 - Sidescrolling
 
+apologies but do take note that the file only works when it is setup with a local server 
+due the browsers security implications:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors
 */
 
 
@@ -73,7 +76,7 @@ function setup()
     
     collectable = {x_pos: 200, y_pos: 300, size: 50};
     
-    clouds_x = [200,800,1400];
+    clouds_x = [200,800,1400];          //3 as per instructions
     cloud = {y_pos: 100, size: 50};
     
     mountains_x = [100,700,1200,1800,2500];
@@ -82,11 +85,11 @@ function setup()
     trees_x = [150,850,1400,1900,2500];
     treePos_y = height/2;
 
-    gravity = 5;    //change the value according to how strong you want the gravitational pull to be
-    speed = 10;      //change the value according to how fast you want to be
+    gravity = 5;        //change the value according to how strong you want the gravitational pull to be
+    speed = 10;         //change the value according to how fast you want to be
 
     sky = 0;
-    peak = false; //everytime the sun/moon peaked, this boolean changes
+    peak = false;       //everytime the sun/moon peaked, this boolean changes
     day = false;
 }
 
@@ -107,7 +110,7 @@ function draw()
         fill(255,255,0);
         ellipse(gameChar_x - 400, 900 - sky*4,100,100);
         //when sunrise, play rooster sound effect
-        if(sky >= 100 && sky <= 100.4 && day == false){
+        if(sky >= 100 && sky <= 100.1 && day == false){
             day = true;
         }
         if(sky > 199){
@@ -135,9 +138,13 @@ function draw()
         point(starX + gameChar_x,starY);
     }
 
+    //play rooster sound  when sun rise
+    if(day == true){
+        morning.play();
+        day = false;
+    }
 
-    console.log(sky);
-
+    
     //Draw green ground
     noStroke();
     fill(0,155,0);
@@ -168,6 +175,7 @@ function draw()
         isFound = true;
     }
     
+    //spawn the collectable and remove it when player reaches it
     if (!isFound){
         fill(255,215,0);
         ellipse(collectable.x_pos + gameChar_x,collectable.y_pos,collectable.size,collectable.size);
@@ -176,7 +184,7 @@ function draw()
     }
     
     
-    //draw and create the interection of mountains
+    //draw and create a for loop to traverse the `mountains_x` array
     for(var i = 0; i < mountains_x.length; i++){
         
         fill(200,200,200);
@@ -189,7 +197,7 @@ function draw()
     }
     
     
-    //draw and create the interection of trees
+    //draw and create a for loop to traverse the `trees_x` array
     for(var i = 0; i < trees_x.length; i++){
         
         fill(160,82,45);
@@ -207,12 +215,10 @@ function draw()
       
         
         
-    //draw and create the interection of the clouds
+    //draw and create a for loop to traverse the `clouds_x` array
     for(var i = 0; i < clouds_x.length; i++){
         
         fill(255,255,255);
-
-        
 
         ellipse(clouds_x[i] + 340, cloud.y_pos - 10, cloud.size + 20, cloud.size + 20);
         ellipse(clouds_x[i] + 380, cloud.y_pos - 5,  cloud.size,cloud.size);
@@ -228,12 +234,13 @@ function draw()
         ellipse(clouds_x[i] + 700, cloud.y_pos - 20, cloud.size,cloud.size);
             
 
-            //if statement to spawn cloud to the player left if player stray to far to the left
+            //This section allows the clouds to move and spawn accordingly
  
-                 
+            //if statement to spawn cloud to the player right if player stray to far to the right     
             if(clouds_x[i] + 800 <= cameraPosX) {
                 clouds_x[i] = (cameraPosX + 800);
             } 
+            //else if statement to spawn cloud to the player left if player stray to far to the left
             else if(clouds_x[i] >= cameraPosX + 800) {
                 clouds_x[i] = (cameraPosX - 800);
                 clouds_x[i]+=3.5; 
@@ -340,14 +347,16 @@ function draw()
         
 	}
     
-    
-    
+
+    console.log(sky);
 	///////////INTERACTION CODE//////////
     
     if(isPlummeting){
         if(gameChar_y < height){
-            gameover.play();    //Play sound 
             gameChar_y += 10;
+            if(gameChar_y > height){
+                gameover.play();    //Play sound when plummeting
+            }
         }
         //as a reference to GTA when a player dies
         noStroke();
@@ -356,6 +365,7 @@ function draw()
         text("WASTED", canyon.x_pos + gameChar_x / 2, height*3/5);
     }
     
+    //"gravity" physics
     if(gameChar_y < floorPos_y){
         gameChar_y+=gravity;  
         isFalling = true; 
@@ -363,27 +373,23 @@ function draw()
         isFalling = false;  
     }
     
+    //move background to the left
     if(isLeft == true){
         cameraPosX -= speed;
     }
     
+    //move background to the right
     if(isRight == true){
         cameraPosX += speed; 
     }
 
-    if(day == true){
-        morning.play();
-        day = false;
-    }
-
-   
 }
 
 
 // function to control the animation of the character when keys are pressed
 function keyPressed()
 {
-    //To ensure player does not move after plummeting
+    //To ensure player does not move after plummeting or "freezing controls"
     if(!isPlummeting){
         
         if(keyCode == 37){
