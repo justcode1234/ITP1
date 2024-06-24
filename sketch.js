@@ -260,90 +260,601 @@ function draw()
 	if(isLeft && isFalling)
 	{
 		// add your jumping-left code
-        fill(200,200,200);     
-        ellipse(gameChar_x, gameChar_y - 65, 20, 20);
+        //head
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 52);
+        vertex(gameChar_x - 5, gameChar_y - 52);
+        endShape(CLOSE);
+
+        //right eye
+        beginShape();
         fill(255,0,0);
-        rect(gameChar_x - 10, gameChar_y - 70, 20, 5);
-        fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 60, 10, 40);
-        fill(200,200,200);
-        rect(gameChar_x - 20, gameChar_y - 50, 20, 7);
-        fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 20, 10, 10);
+        vertex(gameChar_x - 5, gameChar_y - 64);
+        vertex(gameChar_x + 4, gameChar_y - 66);
+        vertex(gameChar_x - 5, gameChar_y - 55);
+        endShape(CLOSE);
+
+        //neck
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 52,4,3);
+
+        //body
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 45);
+        vertex(gameChar_x +  5, gameChar_y - 32);
+        vertex(gameChar_x -  5, gameChar_y - 32);
+        vertex(gameChar_x - 10, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //right arm joint
+        fill(0);
+        ellipse(gameChar_x, gameChar_y - 43,8,8);
+
+        //right arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 1, gameChar_y - 42);
+        vertex(gameChar_x - 5, gameChar_y - 36);
+        vertex(gameChar_x - 3, gameChar_y - 36);
+        vertex(gameChar_x + 1, gameChar_y - 42);
+        endShape(CLOSE);
+
+        //right arm
+        fill(255,255,0);
+        rect(gameChar_x - 15, gameChar_y - 37,12,8);
+
+        //right sword
+        fill(150,150,255);
+        beginShape(TRIANGLES);
+        vertex(gameChar_x - 15, gameChar_y - 37);
+        vertex(gameChar_x - 23, gameChar_y - 33);
+        vertex(gameChar_x - 15, gameChar_y - 29);
+        endShape();
+
+        //body to rocket connector
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 32,4,10);
+
+
+        //thuster
+        fill(255,255,0);
+        beginShape(QUADS);
+        vertex(gameChar_x - 5, gameChar_y - 27);
+        vertex(gameChar_x + 5, gameChar_y - 27);
+        vertex(gameChar_x + 10, gameChar_y - 12);
+        vertex(gameChar_x - 10, gameChar_y - 12);
+        endShape();
+        
+        //fire
+        fill("orange");
+        beginShape();
+        vertex(gameChar_x - 5, gameChar_y - 12);
+        vertex(gameChar_x + 5, gameChar_y - 12);
+        vertex(gameChar_x + 3, gameChar_y - 2);
+        vertex(gameChar_x - 3, gameChar_y - 2);
+        endShape(CLOSE);
+
+        fill(255,0,0);
+        beginShape();
+        vertex(gameChar_x - 3, gameChar_y - 12);
+        vertex(gameChar_x + 3, gameChar_y - 12);
+        vertex(gameChar_x + 1, gameChar_y - 7);
+        vertex(gameChar_x - 1, gameChar_y - 7);
+        endShape(CLOSE);
+	
         
 	}
 	else if(isRight && isFalling)
 	{
 		// add your jumping-right code
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 65, 20, 20);
+        //head
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 52);
+        vertex(gameChar_x - 5, gameChar_y - 52);
+        endShape(CLOSE);
+
+        //left eye
+        beginShape();
         fill(255,0,0);
-        rect(gameChar_x - 10, gameChar_y - 70, 20, 5);
-        fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 60, 10, 40);
-        fill(200,200,200);
-        rect(gameChar_x , gameChar_y - 50, 20, 7);
-        fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 20, 10, 10);
+        vertex(gameChar_x + 5, gameChar_y - 64);
+        vertex(gameChar_x - 4, gameChar_y - 66);
+        vertex(gameChar_x + 5, gameChar_y - 55);
+        endShape(CLOSE);
+
+        //neck
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 52,4,3);
+
+        //body
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 45);
+        vertex(gameChar_x +  5, gameChar_y - 32);
+        vertex(gameChar_x -  5, gameChar_y - 32);
+        vertex(gameChar_x - 10, gameChar_y - 45);
+        endShape(CLOSE);
+
+        //left arm joint
+        fill(0);
+        ellipse(gameChar_x, gameChar_y - 43,8,8);
+
+        //left arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 1, gameChar_y - 42);
+        vertex(gameChar_x + 5, gameChar_y - 36);
+        vertex(gameChar_x + 7, gameChar_y - 36);
+        vertex(gameChar_x + 1, gameChar_y - 42);
+        endShape(CLOSE);
+
+        //left arm
+        fill(255,255,0);
+        rect(gameChar_x + 5, gameChar_y - 37,12,8);
+
+        //left barrel
+        fill('GREY');
+        rect(gameChar_x + 17, gameChar_y - 36,7,2);
+        rect(gameChar_x + 17, gameChar_y - 34,7,2);
+        rect(gameChar_x + 17, gameChar_y - 32,7,2);
+
+
+        //body to rocket connector
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 32,4,10);
+
+
+        //thuster
+        fill(255,255,0);
+        beginShape(QUADS);
+        vertex(gameChar_x - 5, gameChar_y - 27);
+        vertex(gameChar_x + 5, gameChar_y - 27);
+        vertex(gameChar_x + 10, gameChar_y - 12);
+        vertex(gameChar_x - 10, gameChar_y - 12);
+        endShape();
+
+        //fire
+        fill("orange");
+        beginShape();
+        vertex(gameChar_x - 5, gameChar_y - 12);
+        vertex(gameChar_x + 5, gameChar_y - 12);
+        vertex(gameChar_x + 3, gameChar_y - 2);
+        vertex(gameChar_x - 3, gameChar_y - 2);
+        endShape(CLOSE);
+
+        fill(255,0,0);
+        beginShape();
+        vertex(gameChar_x - 3, gameChar_y - 12);
+        vertex(gameChar_x + 3, gameChar_y - 12);
+        vertex(gameChar_x + 1, gameChar_y - 7);
+        vertex(gameChar_x - 1, gameChar_y - 7);
+        endShape(CLOSE);
 
 	}
 	else if(isLeft)
 	{
 		// add your walking left code
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 65, 20, 20);
+        //head
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 52);
+        vertex(gameChar_x - 5, gameChar_y - 52);
+        endShape(CLOSE);
+
+        //right eye
+        beginShape();
         fill(255,0,0);
-        rect(gameChar_x - 10, gameChar_y - 70, 20, 5);
+        vertex(gameChar_x - 5, gameChar_y - 64);
+        vertex(gameChar_x + 4, gameChar_y - 66);
+        vertex(gameChar_x - 5, gameChar_y - 55);
+        endShape(CLOSE);
+
+        //neck
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 52,4,3);
+
+        //body
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 45);
+        vertex(gameChar_x +  5, gameChar_y - 32);
+        vertex(gameChar_x -  5, gameChar_y - 32);
+        vertex(gameChar_x - 10, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //right arm joint
+        fill(0);
+        ellipse(gameChar_x, gameChar_y - 43,8,8);
+
+        //right arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 1, gameChar_y - 42);
+        vertex(gameChar_x - 5, gameChar_y - 36);
+        vertex(gameChar_x - 3, gameChar_y - 36);
+        vertex(gameChar_x + 1, gameChar_y - 42);
+        endShape(CLOSE);
+
+        //right arm
+        fill(255,255,0);
+        rect(gameChar_x - 15, gameChar_y - 37,12,8);
+
+        //right sword
+        fill(150,150,255);
+        beginShape(TRIANGLES);
+        vertex(gameChar_x - 15, gameChar_y - 37);
+        vertex(gameChar_x - 23, gameChar_y - 33);
+        vertex(gameChar_x - 15, gameChar_y - 29);
+        endShape();
+
+        //body to rocket connector
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 32,4,10);
+
+        //wheels
+        fill(0);
+        ellipse(gameChar_x, gameChar_y - 7,16,16);
         fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 60, 10, 40);
-        fill(200,200,200);
-        rect(gameChar_x - 20, gameChar_y - 50, 20, 7);
-        fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 20, 10, 20);
+        ellipse(gameChar_x, gameChar_y - 7,8,8);
+
+
+
+        //thuster
+        fill(255,255,0);
+        beginShape(QUADS);
+        vertex(gameChar_x -  5, gameChar_y - 22);
+        vertex(gameChar_x +  5, gameChar_y - 22);
+        vertex(gameChar_x + 10, gameChar_y - 7);
+        vertex(gameChar_x - 10, gameChar_y - 7);
+        endShape();
+
 
 	}
 	else if(isRight)
 	{
 		// add your walking right code
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 65, 20, 20);
+        //head
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 67);
+        vertex(gameChar_x + 5, gameChar_y - 52);
+        vertex(gameChar_x - 5, gameChar_y - 52);
+        endShape(CLOSE);
+
+        //left eye
+        beginShape();
         fill(255,0,0);
-        rect(gameChar_x - 10, gameChar_y - 70, 20, 5);
+        vertex(gameChar_x + 5, gameChar_y - 64);
+        vertex(gameChar_x - 4, gameChar_y - 66);
+        vertex(gameChar_x + 5, gameChar_y - 55);
+        endShape(CLOSE);
+
+        //neck
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 52,4,3);
+
+        //body
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 45);
+        vertex(gameChar_x +  5, gameChar_y - 32);
+        vertex(gameChar_x -  5, gameChar_y - 32);
+        vertex(gameChar_x - 10, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //left arm joint
+        fill(0);
+        ellipse(gameChar_x, gameChar_y - 43,8,8);
+
+        //left arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 1, gameChar_y - 42);
+        vertex(gameChar_x + 5, gameChar_y - 36);
+        vertex(gameChar_x + 7, gameChar_y - 36);
+        vertex(gameChar_x + 1, gameChar_y - 42);
+        endShape(CLOSE);
+
+        //left arm
+        fill(255,255,0);
+        rect(gameChar_x + 5, gameChar_y - 37,12,8);
+
+        //left barrel
+        fill('GREY');
+        rect(gameChar_x + 17, gameChar_y - 36,7,2);
+        rect(gameChar_x + 17, gameChar_y - 34,7,2);
+        rect(gameChar_x + 17, gameChar_y - 32,7,2);
+
+
+        //body to rocket connector
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 32,4,10);
+
+        //wheels
+        fill(0);
+        ellipse(gameChar_x, gameChar_y - 7,16,16);
         fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 60, 10, 40);
-        fill(200,200,200);
-        rect(gameChar_x , gameChar_y - 50, 20, 7);
-        fill(200,200,200);
-        rect(gameChar_x - 5, gameChar_y - 20, 10, 20);
+        ellipse(gameChar_x, gameChar_y - 7,8,8);
+
+
+
+        //thuster
+        fill(255,255,0);
+        beginShape(QUADS);
+        vertex(gameChar_x -  5, gameChar_y - 22);
+        vertex(gameChar_x +  5, gameChar_y - 22);
+        vertex(gameChar_x + 10, gameChar_y - 7);
+        vertex(gameChar_x - 10, gameChar_y - 7);
+        endShape();
 
 	}
 	else if(isFalling || isPlummeting)
 	{
 		// add your jumping facing forwards code
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 65, 20, 20);
-        rect(gameChar_x - 5, gameChar_y - 60, 10, 40);
-        rect(gameChar_x - 20, gameChar_y - 50, 40, 7);
-        rect(gameChar_x - 10, gameChar_y - 30, 20, 10);
-        rect(gameChar_x - 10, gameChar_y - 20, 7, 10);
-        rect(gameChar_x + 3, gameChar_y - 20, 7, 10);
+       
+        //left eye
+        beginShape();
         fill(255,0,0);
-        rect(gameChar_x - 10, gameChar_y - 70, 20, 5);
+        vertex(gameChar_x - 13, gameChar_y - 64);
+        vertex(gameChar_x - 10, gameChar_y - 66);
+        vertex(gameChar_x - 6,  gameChar_y - 55);
+        endShape(CLOSE);
+    
+        //right eye
+        beginShape();
+        fill(255,0,0);
+        vertex(gameChar_x + 13, gameChar_y - 64);
+        vertex(gameChar_x + 10, gameChar_y - 66);
+        vertex(gameChar_x + 6,  gameChar_y - 55);
+        endShape(CLOSE);
+    
+        //head
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 10, gameChar_y - 67);
+        vertex(gameChar_x + 10, gameChar_y - 67);
+        vertex(gameChar_x + 5,  gameChar_y - 52);
+        vertex(gameChar_x - 5,  gameChar_y - 52);
+        endShape(CLOSE);
+    
+        //neck
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 52,4,3);
+    
+        //body
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 20, gameChar_y - 49);
+        vertex(gameChar_x + 20, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 45);
+        vertex(gameChar_x + 5,  gameChar_y - 32);
+        vertex(gameChar_x - 5,  gameChar_y - 32);
+        vertex(gameChar_x - 10, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //left arm joint
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 15, gameChar_y - 47);
+        vertex(gameChar_x - 10, gameChar_y - 44);
+        vertex(gameChar_x - 9,  gameChar_y - 42);
+        endShape(CLOSE);
+    
+        //left arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 12, gameChar_y - 45);
+        vertex(gameChar_x - 15, gameChar_y - 39);
+        vertex(gameChar_x - 13, gameChar_y - 39);
+        vertex(gameChar_x - 11, gameChar_y - 43);
+        endShape(CLOSE);
+    
+        //left arm
+        fill(255,255,0);
+        rect(gameChar_x - 20, gameChar_y - 39,8,12);
+    
+        //left barrel
+        fill('GREY');
+        rect(gameChar_x - 19,gameChar_y - 27,2,7);
+        rect(gameChar_x - 17,gameChar_y - 27,2,7);
+        rect(gameChar_x - 15,gameChar_y - 27,2,7);
+      
+        //right arm joint
+        beginShape();
+        fill(0);
+        vertex(gameChar_x + 15, gameChar_y - 47);
+        vertex(gameChar_x + 10, gameChar_y - 44);
+        vertex(gameChar_x + 9,  gameChar_y - 42);
+        endShape(CLOSE);
+    
+        //right arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x + 12, gameChar_y - 44);
+        vertex(gameChar_x + 15, gameChar_y - 39);
+        vertex(gameChar_x + 17, gameChar_y - 39);
+        vertex(gameChar_x + 13, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //right arm
+        fill(255,255,0);
+        rect(gameChar_x + 12, gameChar_y - 39,8,12);
+    
+        //right sword
+        fill(150,150,255);
+        beginShape(TRIANGLES);
+        vertex(gameChar_x + 12, gameChar_y - 27);
+        vertex(gameChar_x + 20, gameChar_y - 27);
+        vertex(gameChar_x + 16, gameChar_y - 17);
+        endShape();
+    
+        //body to rocket connector
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 32,4,10);
+    
+        //thuster
+        fill(255,255,0);
+        beginShape(QUADS);
+        vertex(gameChar_x - 5, gameChar_y - 27);
+        vertex(gameChar_x + 5, gameChar_y - 27);
+        vertex(gameChar_x + 10, gameChar_y - 12);
+        vertex(gameChar_x - 10, gameChar_y - 12);
+        endShape();
+    
+        //fire
+        fill("orange");
+        beginShape();
+        vertex(gameChar_x - 5, gameChar_y - 12);
+        vertex(gameChar_x + 5, gameChar_y - 12);
+        vertex(gameChar_x + 3, gameChar_y - 2);
+        vertex(gameChar_x - 3, gameChar_y - 2);
+        endShape(CLOSE);
+
+        fill(255,0,0);
+        beginShape();
+        vertex(gameChar_x - 3, gameChar_y - 12);
+        vertex(gameChar_x + 3, gameChar_y - 12);
+        vertex(gameChar_x + 1, gameChar_y - 7);
+        vertex(gameChar_x - 1, gameChar_y - 7);
+        endShape(CLOSE);
+            
 
 	}
 	else
 	{
         
 		// add your standing front facing code
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 65, 20, 20);
-        rect(gameChar_x - 5, gameChar_y - 60, 10, 40);
-        rect(gameChar_x - 20, gameChar_y - 50, 40, 7);
-        rect(gameChar_x - 10, gameChar_y - 30, 20, 10);
-        rect(gameChar_x - 10, gameChar_y - 20, 7, 20);
-        rect(gameChar_x + 3, gameChar_y - 20, 7, 20);
+        
+        //left eye
+        beginShape();
         fill(255,0,0);
-        rect(gameChar_x - 10, gameChar_y - 70, 20, 5);
+        vertex(gameChar_x - 13, gameChar_y - 64);
+        vertex(gameChar_x - 10, gameChar_y - 66);
+        vertex(gameChar_x - 6,  gameChar_y - 55);
+        endShape(CLOSE);
+    
+        //right eye
+        beginShape();
+        fill(255,0,0);
+        vertex(gameChar_x + 13, gameChar_y - 64);
+        vertex(gameChar_x + 10, gameChar_y - 66);
+        vertex(gameChar_x + 6,  gameChar_y - 55);
+        endShape(CLOSE);
+    
+        //head
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 10, gameChar_y - 67);
+        vertex(gameChar_x + 10, gameChar_y - 67);
+        vertex(gameChar_x + 5,  gameChar_y - 52);
+        vertex(gameChar_x - 5,  gameChar_y - 52);
+        endShape(CLOSE);
+    
+        //neck
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 52,4,3);
+    
+        //body
+        beginShape();
+        fill(255,255,0);
+        vertex(gameChar_x - 20, gameChar_y - 49);
+        vertex(gameChar_x + 20, gameChar_y - 49);
+        vertex(gameChar_x + 10, gameChar_y - 45);
+        vertex(gameChar_x + 5,  gameChar_y - 32);
+        vertex(gameChar_x - 5,  gameChar_y - 32);
+        vertex(gameChar_x - 10, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //left arm joint
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 15, gameChar_y - 47);
+        vertex(gameChar_x - 10, gameChar_y - 44);
+        vertex(gameChar_x - 9,  gameChar_y - 42);
+        endShape(CLOSE);
+    
+        //left arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x - 12, gameChar_y - 45);
+        vertex(gameChar_x - 15, gameChar_y - 39);
+        vertex(gameChar_x - 13, gameChar_y - 39);
+        vertex(gameChar_x - 11, gameChar_y - 43);
+        endShape(CLOSE);
+    
+        //left arm
+        fill(255,255,0);
+        rect(gameChar_x - 20, gameChar_y - 39,8,12);
+    
+        //left barrel
+        fill('GREY');
+        rect(gameChar_x - 19,gameChar_y - 27,2,7);
+        rect(gameChar_x - 17,gameChar_y - 27,2,7);
+        rect(gameChar_x - 15,gameChar_y - 27,2,7);
+      
+        //right arm joint
+        beginShape();
+        fill(0);
+        vertex(gameChar_x + 15, gameChar_y - 47);
+        vertex(gameChar_x + 10, gameChar_y - 44);
+        vertex(gameChar_x + 9,  gameChar_y - 42);
+        endShape(CLOSE);
+    
+        //right arm connector
+        beginShape();
+        fill(0);
+        vertex(gameChar_x + 12, gameChar_y - 44);
+        vertex(gameChar_x + 15, gameChar_y - 39);
+        vertex(gameChar_x + 17, gameChar_y - 39);
+        vertex(gameChar_x + 13, gameChar_y - 45);
+        endShape(CLOSE);
+    
+        //right arm
+        fill(255,255,0);
+        rect(gameChar_x + 12, gameChar_y - 39,8,12);
+    
+        //right sword
+        fill(150,150,255);
+        beginShape(TRIANGLES);
+        vertex(gameChar_x + 12, gameChar_y - 27);
+        vertex(gameChar_x + 20, gameChar_y - 27);
+        vertex(gameChar_x + 16, gameChar_y - 17);
+        endShape();
+    
+        //body to rocket connector
+        fill(0);
+        rect(gameChar_x - 2, gameChar_y - 32,4,10);
+    
+        //thuster
+        fill(255,255,0);
+        beginShape(QUADS);
+        vertex(gameChar_x - 5, gameChar_y - 22);
+        vertex(gameChar_x + 5, gameChar_y - 22);
+        vertex(gameChar_x + 10,gameChar_y - 7);
+        vertex(gameChar_x - 10,gameChar_y - 7);
+        endShape();
+    
+        //wheels
+        fill(0);
+        rect(gameChar_x - 7,gameChar_y - 7,5,8);
+        rect(gameChar_x + 2,gameChar_y - 7,5,8);
         
 	}
     
