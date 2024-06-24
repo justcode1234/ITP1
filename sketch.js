@@ -270,7 +270,7 @@ function draw()
         rect(gameChar_x - 20, gameChar_y - 50, 20, 7);
         fill(200,200,200);
         rect(gameChar_x - 5, gameChar_y - 20, 10, 10);
-
+        
 	}
 	else if(isRight && isFalling)
 	{
