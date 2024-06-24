@@ -24,6 +24,8 @@ var mountains_x;
 var mountainPos_y;
 var trees_x;
 var treePos_y;
+var gravity;
+var speed;
 
 var sky;
 var night;
@@ -80,6 +82,9 @@ function setup()
     trees_x = [150,850,1400,1900,2500];
     treePos_y = height/2;
 
+    gravity = 5;    //change the value according to how strong you want the gravitational pull to be
+    speed = 10;      //change the value according to how fast you want to be
+
     sky = 0;
     peak = false; //everytime the sun/moon peaked, this boolean changes
     day = false;
@@ -102,7 +107,7 @@ function draw()
         fill(255,255,0);
         ellipse(gameChar_x - 400, 900 - sky*4,100,100);
         //when sunrise, play rooster sound effect
-        if(sky >= 100 && sky <= 100.8 && day == false){
+        if(sky >= 100 && sky <= 100.4 && day == false){
             day = true;
         }
         if(sky > 199){
@@ -149,7 +154,7 @@ function draw()
     rect(canyon.x_pos + gameChar_x,floorPos_y,canyon.width,150);
     fill(250,0,0);
     
-    if((cameraPosX > canyon.x_pos && cameraPosX < canyon.x_pos + canyon.width) && gameChar_y == floorPos_y) {
+    if((cameraPosX >= canyon.x_pos && cameraPosX <= canyon.x_pos + canyon.width) && gameChar_y == floorPos_y) {
         isPlummeting = true;
         //To prevent player from moving left and right while plummeting
         isLeft = false;
@@ -207,29 +212,37 @@ function draw()
         
         fill(255,255,255);
 
-        ellipse(clouds_x[i] + 120, cloud.y_pos + 10, cloud.size + 20, cloud.size +20);
-        ellipse(clouds_x[i] + 150, cloud.y_pos + 20, cloud.size,cloud.size);
-        ellipse(clouds_x[i] +  90, cloud.y_pos + 20, cloud.size,cloud.size);
+        
 
         ellipse(clouds_x[i] + 340, cloud.y_pos - 10, cloud.size + 20, cloud.size + 20);
         ellipse(clouds_x[i] + 380, cloud.y_pos - 5,  cloud.size,cloud.size);
         ellipse(clouds_x[i] + 300, cloud.y_pos - 5,  cloud.size,cloud.size);
 
-        ellipse(clouds_x[i] + 590, cloud.y_pos + 10, cloud.size + 20, cloud.size + 20);
-        ellipse(clouds_x[i] + 630, cloud.y_pos + 15, cloud.size,cloud.size);
-        ellipse(clouds_x[i] + 550, cloud.y_pos + 15, cloud.size,cloud.size);
+        ellipse(clouds_x[i] + 590, cloud.y_pos + 30, cloud.size + 20, cloud.size + 20);
+        ellipse(clouds_x[i] + 630, cloud.y_pos + 35, cloud.size,cloud.size);
+        ellipse(clouds_x[i] + 550, cloud.y_pos + 35, cloud.size,cloud.size);
 
+
+        ellipse(clouds_x[i] + 740, cloud.y_pos - 30, cloud.size + 20, cloud.size +20);
+        ellipse(clouds_x[i] + 780, cloud.y_pos - 20, cloud.size,cloud.size);
+        ellipse(clouds_x[i] + 700, cloud.y_pos - 20, cloud.size,cloud.size);
             
 
             //if statement to spawn cloud to the player left if player stray to far to the left
-            if(clouds_x[i] > cameraPosX + 800){
-                clouds_x[i] = cameraPosX - 800;
-                
-            } 
+ 
                  
+            if(clouds_x[i] + 800 <= cameraPosX) {
+                clouds_x[i] = (cameraPosX + 800);
+            } 
+            else if(clouds_x[i] >= cameraPosX + 800) {
+                clouds_x[i] = (cameraPosX - 800);
+                clouds_x[i]+=3.5; 
+            }
+            else {
+                //speed of the cloud
+                clouds_x[i]+=3.5; 
+            }
             
-            //speed of the cloud
-            clouds_x[i]+=3.5; 
         
     }
 
@@ -344,18 +357,18 @@ function draw()
     }
     
     if(gameChar_y < floorPos_y){
-        gameChar_y++;
+        gameChar_y+=gravity;  
         isFalling = true; 
     }else{
         isFalling = false;  
     }
     
     if(isLeft == true){
-        cameraPosX -= 3;
+        cameraPosX -= speed;
     }
     
     if(isRight == true){
-        cameraPosX += 3; 
+        cameraPosX += speed; 
     }
 
     if(day == true){
