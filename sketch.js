@@ -47,6 +47,7 @@ function preload() {
     gameover = loadSound('sound/wasted.mp3'); //load player death sound effect from GTA
     jump = loadSound('sound/jump.mp3');       //load sound effect when mario jumps
     morning = loadSound('sound/rooster.mp3'); //load sound effect when it becomes daytime
+    
     //change volume of sound effect
     gameover.setVolume(2); 
     jump.setVolume(0.3);
@@ -130,18 +131,12 @@ function draw()
     }
 
     //during the night, stars will appear randomly
-    if(sky < 100){
+    if(sky < 101){
         starX = random(-500, 500);
         starY = random(0, 150);
         strokeWeight(5);
         stroke(255);
         point(starX + gameChar_x,starY);
-    }
-
-    //play rooster sound  when sun rise
-    if(day == true){
-        morning.play();
-        day = false;
     }
 
     
@@ -170,8 +165,8 @@ function draw()
     
     
     //draw and create the interection of the collectable
+    //To determine if character approches the collectable
     if(dist(cameraPosX, gameChar_y - 65 ,collectable.x_pos, collectable.y_pos) < 50){  
-        //To determine if character approches the collectable
         isFound = true;
     }
     
@@ -188,8 +183,8 @@ function draw()
     for(var i = 0; i < mountains_x.length; i++){
         
         fill(200,200,200);
-        
         triangle(mountains_x[i] + 250, mountainPos_y + 250, mountains_x[i] + 350, mountainPos_y + 56, mountains_x[i] + 450, mountainPos_y + 250);
+        fill(180,180,180);
         triangle(mountains_x[i] + 325, mountainPos_y + 250, mountains_x[i] + 425, mountainPos_y + 95, mountains_x[i] + 525, mountainPos_y + 250);
         fill(255);
         triangle(mountains_x[i] + 335, mountainPos_y + 85,  mountains_x[i] + 350, mountainPos_y + 56, mountains_x[i] + 365, mountainPos_y + 85);
@@ -310,7 +305,7 @@ function draw()
         rect(gameChar_x - 15, gameChar_y - 37,12,8);
 
         //right sword
-        fill(150,150,255);
+        fill(255,0,0);
         beginShape(TRIANGLES);
         vertex(gameChar_x - 15, gameChar_y - 37);
         vertex(gameChar_x - 23, gameChar_y - 33);
@@ -332,6 +327,14 @@ function draw()
         endShape();
         
         //fire
+        fill(255,0,0);
+        beginShape();
+        vertex(gameChar_x - 7, gameChar_y - 12);
+        vertex(gameChar_x + 7, gameChar_y - 12);
+        vertex(gameChar_x + 5, gameChar_y + 1);
+        vertex(gameChar_x - 5, gameChar_y + 1);
+        endShape(CLOSE);
+
         fill("orange");
         beginShape();
         vertex(gameChar_x - 5, gameChar_y - 12);
@@ -405,7 +408,6 @@ function draw()
         //left barrel
         fill('GREY');
         rect(gameChar_x + 17, gameChar_y - 36,7,2);
-        rect(gameChar_x + 17, gameChar_y - 34,7,2);
         rect(gameChar_x + 17, gameChar_y - 32,7,2);
 
 
@@ -424,6 +426,14 @@ function draw()
         endShape();
 
         //fire
+        fill(255,0,0);
+        beginShape();
+        vertex(gameChar_x - 7, gameChar_y - 12);
+        vertex(gameChar_x + 7, gameChar_y - 12);
+        vertex(gameChar_x + 5, gameChar_y + 1);
+        vertex(gameChar_x - 5, gameChar_y + 1);
+        endShape(CLOSE);
+
         fill("orange");
         beginShape();
         vertex(gameChar_x - 5, gameChar_y - 12);
@@ -494,7 +504,7 @@ function draw()
         rect(gameChar_x - 15, gameChar_y - 37,12,8);
 
         //right sword
-        fill(150,150,255);
+        fill(255,0,0);
         beginShape(TRIANGLES);
         vertex(gameChar_x - 15, gameChar_y - 37);
         vertex(gameChar_x - 23, gameChar_y - 33);
@@ -579,7 +589,6 @@ function draw()
         //left barrel
         fill('GREY');
         rect(gameChar_x + 17, gameChar_y - 36,7,2);
-        rect(gameChar_x + 17, gameChar_y - 34,7,2);
         rect(gameChar_x + 17, gameChar_y - 32,7,2);
 
 
@@ -673,7 +682,6 @@ function draw()
         //left barrel
         fill('GREY');
         rect(gameChar_x - 19,gameChar_y - 27,2,7);
-        rect(gameChar_x - 17,gameChar_y - 27,2,7);
         rect(gameChar_x - 15,gameChar_y - 27,2,7);
       
         //right arm joint
@@ -698,7 +706,7 @@ function draw()
         rect(gameChar_x + 12, gameChar_y - 39,8,12);
     
         //right sword
-        fill(150,150,255);
+        fill(255,0,0);
         beginShape(TRIANGLES);
         vertex(gameChar_x + 12, gameChar_y - 27);
         vertex(gameChar_x + 20, gameChar_y - 27);
@@ -719,6 +727,15 @@ function draw()
         endShape();
     
         //fire
+
+        fill(255,0,0);
+        beginShape();
+        vertex(gameChar_x - 7, gameChar_y - 12);
+        vertex(gameChar_x + 7, gameChar_y - 12);
+        vertex(gameChar_x + 5, gameChar_y + 1);
+        vertex(gameChar_x - 5, gameChar_y + 1);
+        endShape(CLOSE);
+        
         fill("orange");
         beginShape();
         vertex(gameChar_x - 5, gameChar_y - 12);
@@ -734,6 +751,8 @@ function draw()
         vertex(gameChar_x + 1, gameChar_y - 7);
         vertex(gameChar_x - 1, gameChar_y - 7);
         endShape(CLOSE);
+
+        
             
 
 	}
@@ -806,7 +825,6 @@ function draw()
         //left barrel
         fill('GREY');
         rect(gameChar_x - 19,gameChar_y - 27,2,7);
-        rect(gameChar_x - 17,gameChar_y - 27,2,7);
         rect(gameChar_x - 15,gameChar_y - 27,2,7);
       
         //right arm joint
@@ -831,7 +849,7 @@ function draw()
         rect(gameChar_x + 12, gameChar_y - 39,8,12);
     
         //right sword
-        fill(150,150,255);
+        fill(255,0,0);
         beginShape(TRIANGLES);
         vertex(gameChar_x + 12, gameChar_y - 27);
         vertex(gameChar_x + 20, gameChar_y - 27);
@@ -859,7 +877,6 @@ function draw()
 	}
     
 
-    console.log(sky);
 	///////////INTERACTION CODE//////////
     
     if(isPlummeting){
@@ -894,6 +911,11 @@ function draw()
         cameraPosX += speed; 
     }
 
+    //play rooster sound  when sun rise
+    if(day == true){
+        morning.play();
+        day = false;
+    }
 }
 
 
@@ -904,16 +926,13 @@ function keyPressed()
     if(!isPlummeting){
         
         if(keyCode == 37){
-            console.log("left arrow pressed");
             isLeft = true;
         }
         if(keyCode == 39){
-            console.log("right arrow pressed");
             isRight = true;
         }
         if(keyCode == 32  && !isFalling ){
             jump.play(); //play mario jumping sound
-            console.log("spacebar is pressed");
             gameChar_y -= 100; 
             isFalling = true;
         }
@@ -927,11 +946,9 @@ function keyPressed()
 function keyReleased()
 {
     if(keyCode == 37){
-        console.log("left arrow released");
         isLeft = false;
     }
     if(keyCode == 39){
-        console.log("right arrow released");
         isRight = false;
     }
 }
