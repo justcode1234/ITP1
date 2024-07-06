@@ -44,7 +44,7 @@ let gameover;
 let jump;
 let morning;
 
-// referenced from https://p5js.org/reference/#/libraries/p5.sound
+// referenced from https://archive.p5js.org/reference/#/p5/loadSound
 //assistance from P5.js examples (starting)
 function preload() {
     soundFormats('mp3');
@@ -53,6 +53,7 @@ function preload() {
     morning = loadSound('sound/rooster.mp3'); //load sound effect when it becomes daytime
     
     //change volume of sound effect
+    // referenced from https://archive.p5js.org/reference/#/p5.SoundFile/setVolume
     gameover.setVolume(1.0); 
     jump.setVolume(0.1);
     morning.setVolume(1.0);
@@ -83,20 +84,21 @@ function setup()
     collectable = {x_pos: 200, y_pos: 300, size: 50};
     
     clouds_x = [200,800,1400];          //3 as per instructions
-    cloud = {y_pos: 100, size: 50};     //change height and size of cloud
+    cloud = {y_pos: 100, size: 50};     //Height and size of cloud
+    cloudSpeed = 3.5;                   //Speed of cloud
     
     mountains_x = [-500,100,700,1200,1800];
-    mountainPos_y = 182;                //change base height of mountain
+    mountainPos_y = 182;                //Base height of mountain
     
-    trees_x = [-600,150,850,1400,1900];
+    trees_x = [-600,150,850,1400,1900];     
     treePos_y = height/2;               //change base height of tree
 
     gravity = 5;        //change the value according to how strong you want the gravitational pull to be
     speed = 10;         //change the value according to how fast you want to be
 
-    sky = 0;
+    sky = 0;            //store as time(12 am)
     peak = false;       //everytime the sun/moon peaked, this boolean changes
-    day = false;
+    day = false;        //day start as false as it is nighttime
 }
 
 
@@ -241,11 +243,11 @@ function draw()
             //else if statement to spawn cloud to the player left if player stray to far to the left
             else if(clouds_x[i] >= cameraPosX + 800) {
                 clouds_x[i] = (cameraPosX - 800);
-                clouds_x[i]+=3.5; 
+                clouds_x[i]+=cloudSpeed; 
             }
             else {
                 //speed of the cloud
-                clouds_x[i]+=3.5; 
+                clouds_x[i]+=cloudSpeed; 
             }
     }
 
