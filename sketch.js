@@ -14,7 +14,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors.
 var gameChar_x;
 var gameChar_y;
 var floorPos_y;
-var cameraPosX;
+var cameraPosX = 0;
 
 var isLeft; 
 var isRight;
@@ -45,7 +45,7 @@ let jump;
 let morning;
 
 // referenced from https://archive.p5js.org/reference/#/p5/loadSound
-//assistance from P5.js examples (starting)
+//assistance from P5.js examples
 function preload() {
     soundFormats('mp3');
     gameover = loadSound('sound/wasted.mp3'); //load player death sound effect from GTA
@@ -58,7 +58,7 @@ function preload() {
     jump.setVolume(0.1);
     morning.setVolume(1.0);
   }
-//end
+
 
 function setup()
 {
@@ -93,8 +93,8 @@ function setup()
     trees_x = [-600,150,850,1400,1900];     
     treePos_y = height/2;               //change base height of tree
 
-    gravity = 5;        //change the value according to how strong you want the gravitational pull to be
-    speed = 10;         //change the value according to how fast you want to be
+    gravity = 5;        //value of the gravitational pull strength
+    speed = 10;         //value of character speed
 
     sky = 0;            //store as time(12 am)
     peak = false;       //everytime the sun/moon peaked, this boolean changes
@@ -158,7 +158,7 @@ function draw()
     translate(-cameraPosX, 0);
     
     
-	//draw and create the interection of the canyon 
+	//draw and create the interaction of the canyon 
 	fill(100, 155, 255);
     rect(canyon.x_pos + gameChar_x,floorPos_y,canyon.width,150);
     
@@ -170,7 +170,7 @@ function draw()
     }
     
     
-    //draw and create the interection of the collectable
+    //draw and create the interaction of the collectable
     //To determine if character approches the collectable
     if(dist(cameraPosX, gameChar_y - 65 ,collectable.x_pos, collectable.y_pos) < 50){  
         isFound = true;
@@ -353,6 +353,7 @@ function draw()
         if(gameChar_y < height){
             gameChar_y += gravity*1.5;
             if(gameChar_y > height){
+                //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
                 gameover.play();    //Play sound when plummeting
             }
         }
@@ -383,6 +384,7 @@ function draw()
 
     //play rooster sound  when sun rise
     if(day == true){
+        //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
         morning.play();
         day = false;
     }
@@ -402,6 +404,7 @@ function keyPressed()
             isRight = true;
         }
         if(keyCode == 32  && !isFalling ){
+            //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
             jump.play(); //play mario jumping sound
             gameChar_y -= 100; 
             isFalling = true;
