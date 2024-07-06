@@ -83,16 +83,13 @@ function setup()
     collectable = {x_pos: 200, y_pos: 300, size: 50};
     
     clouds_x = [200,800,1400];          //3 as per instructions
-    cloud = {y_pos: 100, size: 50};
+    cloud = {y_pos: 100, size: 50};     //change height and size of cloud
     
     mountains_x = [-500,100,700,1200,1800];
     mountainPos_y = 182;                //change base height of mountain
     
     trees_x = [-600,150,850,1400,1900];
     treePos_y = height/2;               //change base height of tree
-
-    gravity = 5;        //change the value according to how strong you want the gravitational pull to be
-    speed = 10;         //change the value according to how fast you want to be
 
     gravity = 5;        //change the value according to how strong you want the gravitational pull to be
     speed = 10;         //change the value according to how fast you want to be
@@ -142,8 +139,6 @@ function draw()
     if(sky < 101){
         starX = random(-gameChar_x,gameChar_x); //spawn stars whithin frame of character
         starY = random(0, 150);                 //spawn stars only within the sky
-        starX = random(-500, 500);
-        starY = random(0, 150);
         strokeWeight(5);
         stroke(255);
         point(starX + gameChar_x,starY);
@@ -194,9 +189,6 @@ function draw()
         fill(160);
         triangle(mountains_x[i] + 250, mountainPos_y + 250, mountains_x[i] + 350, mountainPos_y + 56, mountains_x[i] + 450, mountainPos_y + 250);
         fill(180);
-        fill(200,200,200);
-        triangle(mountains_x[i] + 250, mountainPos_y + 250, mountains_x[i] + 350, mountainPos_y + 56, mountains_x[i] + 450, mountainPos_y + 250);
-        fill(180,180,180);
         triangle(mountains_x[i] + 325, mountainPos_y + 250, mountains_x[i] + 425, mountainPos_y + 95, mountains_x[i] + 525, mountainPos_y + 250);
         fill(255);
         triangle(mountains_x[i] + 335, mountainPos_y + 85,  mountains_x[i] + 350, mountainPos_y + 56, mountains_x[i] + 365, mountainPos_y + 85);
@@ -236,7 +228,6 @@ function draw()
 
 
         ellipse(clouds_x[i] + 740, cloud.y_pos - 30, cloud.size + 20, cloud.size + 20);
-        ellipse(clouds_x[i] + 740, cloud.y_pos - 30, cloud.size + 20, cloud.size +20);
         ellipse(clouds_x[i] + 780, cloud.y_pos - 20, cloud.size,cloud.size);
         ellipse(clouds_x[i] + 700, cloud.y_pos - 20, cloud.size,cloud.size);
             
@@ -256,8 +247,6 @@ function draw()
                 //speed of the cloud
                 clouds_x[i]+=3.5; 
             }
-            
-        
     }
 
     pop();
@@ -277,104 +266,6 @@ function draw()
         rect(gameChar_x+20,gameChar_y-35,5,20);
         fill(200);
         rect(gameChar_x+20,gameChar_y-55,5,20);
-		// add your jumping-left code
-        //head
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 52);
-        vertex(gameChar_x - 5, gameChar_y - 52);
-        endShape(CLOSE);
-
-        //right eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x - 5, gameChar_y - 64);
-        vertex(gameChar_x + 4, gameChar_y - 66);
-        vertex(gameChar_x - 5, gameChar_y - 55);
-        endShape(CLOSE);
-
-        //neck
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 52,4,3);
-
-        //body
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 45);
-        vertex(gameChar_x +  5, gameChar_y - 32);
-        vertex(gameChar_x -  5, gameChar_y - 32);
-        vertex(gameChar_x - 10, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //right arm joint
-        fill(0);
-        ellipse(gameChar_x, gameChar_y - 43,8,8);
-
-        //right arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 1, gameChar_y - 42);
-        vertex(gameChar_x - 5, gameChar_y - 36);
-        vertex(gameChar_x - 3, gameChar_y - 36);
-        vertex(gameChar_x + 1, gameChar_y - 42);
-        endShape(CLOSE);
-
-        //right arm
-        fill(255,255,0);
-        rect(gameChar_x - 15, gameChar_y - 37,12,8);
-
-        //right sword
-        fill(255,0,0);
-        beginShape(TRIANGLES);
-        vertex(gameChar_x - 15, gameChar_y - 37);
-        vertex(gameChar_x - 23, gameChar_y - 33);
-        vertex(gameChar_x - 15, gameChar_y - 29);
-        endShape();
-
-        //body to rocket connector
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 32,4,10);
-
-
-        //thuster
-        fill(255,255,0);
-        beginShape(QUADS);
-        vertex(gameChar_x - 5, gameChar_y - 27);
-        vertex(gameChar_x + 5, gameChar_y - 27);
-        vertex(gameChar_x + 10, gameChar_y - 12);
-        vertex(gameChar_x - 10, gameChar_y - 12);
-        endShape();
-        
-        //fire
-        fill(255,0,0);
-        beginShape();
-        vertex(gameChar_x - 7, gameChar_y - 12);
-        vertex(gameChar_x + 7, gameChar_y - 12);
-        vertex(gameChar_x + 5, gameChar_y + 1);
-        vertex(gameChar_x - 5, gameChar_y + 1);
-        endShape(CLOSE);
-
-        fill("orange");
-        beginShape();
-        vertex(gameChar_x - 5, gameChar_y - 12);
-        vertex(gameChar_x + 5, gameChar_y - 12);
-        vertex(gameChar_x + 3, gameChar_y - 2);
-        vertex(gameChar_x - 3, gameChar_y - 2);
-        endShape(CLOSE);
-
-        fill(255,0,0);
-        beginShape();
-        vertex(gameChar_x - 3, gameChar_y - 12);
-        vertex(gameChar_x + 3, gameChar_y - 12);
-        vertex(gameChar_x + 1, gameChar_y - 7);
-        vertex(gameChar_x - 1, gameChar_y - 7);
-        endShape(CLOSE);
-	
-        
 	}
     
 	else if(isRight && isFalling)
@@ -390,102 +281,6 @@ function draw()
         rect(gameChar_x+20,gameChar_y-75,5,20);
         fill(200);
         rect(gameChar_x+20,gameChar_y-55,5,20);
-	{
-		// add your jumping-right code
-        //head
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 52);
-        vertex(gameChar_x - 5, gameChar_y - 52);
-        endShape(CLOSE);
-
-        //left eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x + 5, gameChar_y - 64);
-        vertex(gameChar_x - 4, gameChar_y - 66);
-        vertex(gameChar_x + 5, gameChar_y - 55);
-        endShape(CLOSE);
-
-        //neck
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 52,4,3);
-
-        //body
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 45);
-        vertex(gameChar_x +  5, gameChar_y - 32);
-        vertex(gameChar_x -  5, gameChar_y - 32);
-        vertex(gameChar_x - 10, gameChar_y - 45);
-        endShape(CLOSE);
-
-        //left arm joint
-        fill(0);
-        ellipse(gameChar_x, gameChar_y - 43,8,8);
-
-        //left arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 1, gameChar_y - 42);
-        vertex(gameChar_x + 5, gameChar_y - 36);
-        vertex(gameChar_x + 7, gameChar_y - 36);
-        vertex(gameChar_x + 1, gameChar_y - 42);
-        endShape(CLOSE);
-
-        //left arm
-        fill(255,255,0);
-        rect(gameChar_x + 5, gameChar_y - 37,12,8);
-
-        //left barrel
-        fill('GREY');
-        rect(gameChar_x + 17, gameChar_y - 36,7,2);
-        rect(gameChar_x + 17, gameChar_y - 32,7,2);
-
-
-        //body to rocket connector
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 32,4,10);
-
-
-        //thuster
-        fill(255,255,0);
-        beginShape(QUADS);
-        vertex(gameChar_x - 5, gameChar_y - 27);
-        vertex(gameChar_x + 5, gameChar_y - 27);
-        vertex(gameChar_x + 10, gameChar_y - 12);
-        vertex(gameChar_x - 10, gameChar_y - 12);
-        endShape();
-
-        //fire
-        fill(255,0,0);
-        beginShape();
-        vertex(gameChar_x - 7, gameChar_y - 12);
-        vertex(gameChar_x + 7, gameChar_y - 12);
-        vertex(gameChar_x + 5, gameChar_y + 1);
-        vertex(gameChar_x - 5, gameChar_y + 1);
-        endShape(CLOSE);
-
-        fill("orange");
-        beginShape();
-        vertex(gameChar_x - 5, gameChar_y - 12);
-        vertex(gameChar_x + 5, gameChar_y - 12);
-        vertex(gameChar_x + 3, gameChar_y - 2);
-        vertex(gameChar_x - 3, gameChar_y - 2);
-        endShape(CLOSE);
-
-        fill(255,0,0);
-        beginShape();
-        vertex(gameChar_x - 3, gameChar_y - 12);
-        vertex(gameChar_x + 3, gameChar_y - 12);
-        vertex(gameChar_x + 1, gameChar_y - 7);
-        vertex(gameChar_x - 1, gameChar_y - 7);
-        endShape(CLOSE);
-
 	}
     
 	else if(isLeft)
@@ -501,86 +296,6 @@ function draw()
         rect(gameChar_x-20,gameChar_y-75,5,20);
         fill(200);
         rect(gameChar_x-20,gameChar_y-55,5,20);
-		// add your walking left code
-        //head
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 52);
-        vertex(gameChar_x - 5, gameChar_y - 52);
-        endShape(CLOSE);
-
-        //right eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x - 5, gameChar_y - 64);
-        vertex(gameChar_x + 4, gameChar_y - 66);
-        vertex(gameChar_x - 5, gameChar_y - 55);
-        endShape(CLOSE);
-
-        //neck
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 52,4,3);
-
-        //body
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 45);
-        vertex(gameChar_x +  5, gameChar_y - 32);
-        vertex(gameChar_x -  5, gameChar_y - 32);
-        vertex(gameChar_x - 10, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //right arm joint
-        fill(0);
-        ellipse(gameChar_x, gameChar_y - 43,8,8);
-
-        //right arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 1, gameChar_y - 42);
-        vertex(gameChar_x - 5, gameChar_y - 36);
-        vertex(gameChar_x - 3, gameChar_y - 36);
-        vertex(gameChar_x + 1, gameChar_y - 42);
-        endShape(CLOSE);
-
-        //right arm
-        fill(255,255,0);
-        rect(gameChar_x - 15, gameChar_y - 37,12,8);
-
-        //right sword
-        fill(255,0,0);
-        beginShape(TRIANGLES);
-        vertex(gameChar_x - 15, gameChar_y - 37);
-        vertex(gameChar_x - 23, gameChar_y - 33);
-        vertex(gameChar_x - 15, gameChar_y - 29);
-        endShape();
-
-        //body to rocket connector
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 32,4,10);
-
-        //wheels
-        fill(0);
-        ellipse(gameChar_x, gameChar_y - 7,16,16);
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 7,8,8);
-
-
-
-        //thuster
-        fill(255,255,0);
-        beginShape(QUADS);
-        vertex(gameChar_x -  5, gameChar_y - 22);
-        vertex(gameChar_x +  5, gameChar_y - 22);
-        vertex(gameChar_x + 10, gameChar_y - 7);
-        vertex(gameChar_x - 10, gameChar_y - 7);
-        endShape();
-
-
 	}
     
 	else if(isRight)
@@ -596,83 +311,6 @@ function draw()
         rect(gameChar_x+20,gameChar_y-75,5,20);
         fill(200);
         rect(gameChar_x+20,gameChar_y-55,5,20);
-		// add your walking right code
-        //head
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 67);
-        vertex(gameChar_x + 5, gameChar_y - 52);
-        vertex(gameChar_x - 5, gameChar_y - 52);
-        endShape(CLOSE);
-
-        //left eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x + 5, gameChar_y - 64);
-        vertex(gameChar_x - 4, gameChar_y - 66);
-        vertex(gameChar_x + 5, gameChar_y - 55);
-        endShape(CLOSE);
-
-        //neck
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 52,4,3);
-
-        //body
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 45);
-        vertex(gameChar_x +  5, gameChar_y - 32);
-        vertex(gameChar_x -  5, gameChar_y - 32);
-        vertex(gameChar_x - 10, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //left arm joint
-        fill(0);
-        ellipse(gameChar_x, gameChar_y - 43,8,8);
-
-        //left arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 1, gameChar_y - 42);
-        vertex(gameChar_x + 5, gameChar_y - 36);
-        vertex(gameChar_x + 7, gameChar_y - 36);
-        vertex(gameChar_x + 1, gameChar_y - 42);
-        endShape(CLOSE);
-
-        //left arm
-        fill(255,255,0);
-        rect(gameChar_x + 5, gameChar_y - 37,12,8);
-
-        //left barrel
-        fill('GREY');
-        rect(gameChar_x + 17, gameChar_y - 36,7,2);
-        rect(gameChar_x + 17, gameChar_y - 32,7,2);
-
-
-        //body to rocket connector
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 32,4,10);
-
-        //wheels
-        fill(0);
-        ellipse(gameChar_x, gameChar_y - 7,16,16);
-        fill(200,200,200);
-        ellipse(gameChar_x, gameChar_y - 7,8,8);
-
-
-
-        //thuster
-        fill(255,255,0);
-        beginShape(QUADS);
-        vertex(gameChar_x -  5, gameChar_y - 22);
-        vertex(gameChar_x +  5, gameChar_y - 22);
-        vertex(gameChar_x + 10, gameChar_y - 7);
-        vertex(gameChar_x - 10, gameChar_y - 7);
-        endShape();
-
 	}
     
 	else if(isFalling || isPlummeting)
@@ -687,145 +325,6 @@ function draw()
         rect(gameChar_x-10,gameChar_y-70,20,5);
         fill(200);
         rect(gameChar_x-20,gameChar_y-55,5,20);
-		// add your jumping facing forwards code
-       
-        //left eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x - 13, gameChar_y - 64);
-        vertex(gameChar_x - 10, gameChar_y - 66);
-        vertex(gameChar_x - 6,  gameChar_y - 55);
-        endShape(CLOSE);
-    
-        //right eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x + 13, gameChar_y - 64);
-        vertex(gameChar_x + 10, gameChar_y - 66);
-        vertex(gameChar_x + 6,  gameChar_y - 55);
-        endShape(CLOSE);
-    
-        //head
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 10, gameChar_y - 67);
-        vertex(gameChar_x + 10, gameChar_y - 67);
-        vertex(gameChar_x + 5,  gameChar_y - 52);
-        vertex(gameChar_x - 5,  gameChar_y - 52);
-        endShape(CLOSE);
-    
-        //neck
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 52,4,3);
-    
-        //body
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 20, gameChar_y - 49);
-        vertex(gameChar_x + 20, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 45);
-        vertex(gameChar_x + 5,  gameChar_y - 32);
-        vertex(gameChar_x - 5,  gameChar_y - 32);
-        vertex(gameChar_x - 10, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //left arm joint
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 15, gameChar_y - 47);
-        vertex(gameChar_x - 10, gameChar_y - 44);
-        vertex(gameChar_x - 9,  gameChar_y - 42);
-        endShape(CLOSE);
-    
-        //left arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 12, gameChar_y - 45);
-        vertex(gameChar_x - 15, gameChar_y - 39);
-        vertex(gameChar_x - 13, gameChar_y - 39);
-        vertex(gameChar_x - 11, gameChar_y - 43);
-        endShape(CLOSE);
-    
-        //left arm
-        fill(255,255,0);
-        rect(gameChar_x - 20, gameChar_y - 39,8,12);
-    
-        //left barrel
-        fill('GREY');
-        rect(gameChar_x - 19,gameChar_y - 27,2,7);
-        rect(gameChar_x - 15,gameChar_y - 27,2,7);
-      
-        //right arm joint
-        beginShape();
-        fill(0);
-        vertex(gameChar_x + 15, gameChar_y - 47);
-        vertex(gameChar_x + 10, gameChar_y - 44);
-        vertex(gameChar_x + 9,  gameChar_y - 42);
-        endShape(CLOSE);
-    
-        //right arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x + 12, gameChar_y - 44);
-        vertex(gameChar_x + 15, gameChar_y - 39);
-        vertex(gameChar_x + 17, gameChar_y - 39);
-        vertex(gameChar_x + 13, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //right arm
-        fill(255,255,0);
-        rect(gameChar_x + 12, gameChar_y - 39,8,12);
-    
-        //right sword
-        fill(255,0,0);
-        beginShape(TRIANGLES);
-        vertex(gameChar_x + 12, gameChar_y - 27);
-        vertex(gameChar_x + 20, gameChar_y - 27);
-        vertex(gameChar_x + 16, gameChar_y - 17);
-        endShape();
-    
-        //body to rocket connector
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 32,4,10);
-    
-        //thuster
-        fill(255,255,0);
-        beginShape(QUADS);
-        vertex(gameChar_x - 5, gameChar_y - 27);
-        vertex(gameChar_x + 5, gameChar_y - 27);
-        vertex(gameChar_x + 10, gameChar_y - 12);
-        vertex(gameChar_x - 10, gameChar_y - 12);
-        endShape();
-    
-        //fire
-
-        fill(255,0,0);
-        beginShape();
-        vertex(gameChar_x - 7, gameChar_y - 12);
-        vertex(gameChar_x + 7, gameChar_y - 12);
-        vertex(gameChar_x + 5, gameChar_y + 1);
-        vertex(gameChar_x - 5, gameChar_y + 1);
-        endShape(CLOSE);
-        
-        fill("orange");
-        beginShape();
-        vertex(gameChar_x - 5, gameChar_y - 12);
-        vertex(gameChar_x + 5, gameChar_y - 12);
-        vertex(gameChar_x + 3, gameChar_y - 2);
-        vertex(gameChar_x - 3, gameChar_y - 2);
-        endShape(CLOSE);
-
-        fill(255,0,0);
-        beginShape();
-        vertex(gameChar_x - 3, gameChar_y - 12);
-        vertex(gameChar_x + 3, gameChar_y - 12);
-        vertex(gameChar_x + 1, gameChar_y - 7);
-        vertex(gameChar_x - 1, gameChar_y - 7);
-        endShape(CLOSE);
-
-        
-            
-
 	}
     
 	else
@@ -841,122 +340,6 @@ function draw()
         rect(gameChar_x-20,gameChar_y-75,5,20);
         fill(200);
         rect(gameChar_x-20,gameChar_y-55,5,20);
-        
-		// add your standing front facing code
-        
-        //left eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x - 13, gameChar_y - 64);
-        vertex(gameChar_x - 10, gameChar_y - 66);
-        vertex(gameChar_x - 6,  gameChar_y - 55);
-        endShape(CLOSE);
-    
-        //right eye
-        beginShape();
-        fill(255,0,0);
-        vertex(gameChar_x + 13, gameChar_y - 64);
-        vertex(gameChar_x + 10, gameChar_y - 66);
-        vertex(gameChar_x + 6,  gameChar_y - 55);
-        endShape(CLOSE);
-    
-        //head
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 10, gameChar_y - 67);
-        vertex(gameChar_x + 10, gameChar_y - 67);
-        vertex(gameChar_x + 5,  gameChar_y - 52);
-        vertex(gameChar_x - 5,  gameChar_y - 52);
-        endShape(CLOSE);
-    
-        //neck
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 52,4,3);
-    
-        //body
-        beginShape();
-        fill(255,255,0);
-        vertex(gameChar_x - 20, gameChar_y - 49);
-        vertex(gameChar_x + 20, gameChar_y - 49);
-        vertex(gameChar_x + 10, gameChar_y - 45);
-        vertex(gameChar_x + 5,  gameChar_y - 32);
-        vertex(gameChar_x - 5,  gameChar_y - 32);
-        vertex(gameChar_x - 10, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //left arm joint
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 15, gameChar_y - 47);
-        vertex(gameChar_x - 10, gameChar_y - 44);
-        vertex(gameChar_x - 9,  gameChar_y - 42);
-        endShape(CLOSE);
-    
-        //left arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x - 12, gameChar_y - 45);
-        vertex(gameChar_x - 15, gameChar_y - 39);
-        vertex(gameChar_x - 13, gameChar_y - 39);
-        vertex(gameChar_x - 11, gameChar_y - 43);
-        endShape(CLOSE);
-    
-        //left arm
-        fill(255,255,0);
-        rect(gameChar_x - 20, gameChar_y - 39,8,12);
-    
-        //left barrel
-        fill('GREY');
-        rect(gameChar_x - 19,gameChar_y - 27,2,7);
-        rect(gameChar_x - 15,gameChar_y - 27,2,7);
-      
-        //right arm joint
-        beginShape();
-        fill(0);
-        vertex(gameChar_x + 15, gameChar_y - 47);
-        vertex(gameChar_x + 10, gameChar_y - 44);
-        vertex(gameChar_x + 9,  gameChar_y - 42);
-        endShape(CLOSE);
-    
-        //right arm connector
-        beginShape();
-        fill(0);
-        vertex(gameChar_x + 12, gameChar_y - 44);
-        vertex(gameChar_x + 15, gameChar_y - 39);
-        vertex(gameChar_x + 17, gameChar_y - 39);
-        vertex(gameChar_x + 13, gameChar_y - 45);
-        endShape(CLOSE);
-    
-        //right arm
-        fill(255,255,0);
-        rect(gameChar_x + 12, gameChar_y - 39,8,12);
-    
-        //right sword
-        fill(255,0,0);
-        beginShape(TRIANGLES);
-        vertex(gameChar_x + 12, gameChar_y - 27);
-        vertex(gameChar_x + 20, gameChar_y - 27);
-        vertex(gameChar_x + 16, gameChar_y - 17);
-        endShape();
-    
-        //body to rocket connector
-        fill(0);
-        rect(gameChar_x - 2, gameChar_y - 32,4,10);
-    
-        //thuster
-        fill(255,255,0);
-        beginShape(QUADS);
-        vertex(gameChar_x - 5, gameChar_y - 22);
-        vertex(gameChar_x + 5, gameChar_y - 22);
-        vertex(gameChar_x + 10,gameChar_y - 7);
-        vertex(gameChar_x - 10,gameChar_y - 7);
-        endShape();
-    
-        //wheels
-        fill(0);
-        rect(gameChar_x - 7,gameChar_y - 7,5,8);
-        rect(gameChar_x + 2,gameChar_y - 7,5,8);
-        
 	}
     
 
@@ -967,7 +350,6 @@ function draw()
     if(isPlummeting){
         if(gameChar_y < height){
             gameChar_y += gravity*1.5;
-            gameChar_y += 10;
             if(gameChar_y > height){
                 gameover.play();    //Play sound when plummeting
             }
