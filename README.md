@@ -1,3 +1,7 @@
+apologies but do take note that the file only works when it is setup with a local server 
+due the browsers security implications:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors
+
 1. Make a copy of your code from part 3b
 
 2. Make an array of tree positions
@@ -48,7 +52,7 @@ We can achieve this by using p5’s [`translate`](https://p5js.org/reference/#/p
 
 Make sure you've read about how these work before attempting the following steps
 
- Declare a variable called `cameraPosX` and initialise it to 0    
+Declare a variable called `cameraPosX` and initialise it to 0    
 
 Make sure that all of code which draws all of your game scenery appears consecutively within your draw loop directly BEFORE the code which draws your game character.    
 
@@ -64,7 +68,7 @@ Test that your canyon and collectable still interact as expected
 
 8. Code Presentation
 
-    Make sure you produce readable code:        
+Make sure you produce readable code:        
 
 Use correct indentation        
 
