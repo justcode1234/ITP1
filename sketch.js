@@ -215,12 +215,12 @@ function startGame(){
     
     
     canyons = [{x_pos: 150, width: 200}, 
-               {x_pos: 750, width: 250}, 
-               {x_pos: 1250,width: 225}];
+               {x_pos: 700, width: 200}, 
+               {x_pos: 1220,width: 200}];
     
     collectables = [{x_pos: 250, isFound: false},
-                    {x_pos: 850, isFound: false},
-                    {x_pos: 1350, isFound: false}];    
+                    {x_pos: 800, isFound: false},
+                    {x_pos: 1300, isFound: false}];    
     
     clouds = [{x_pos:200, y_pos: 100, size: 50},
               {x_pos:800, y_pos: 100, size: 50},
@@ -229,7 +229,7 @@ function startGame(){
     
     mountains = [{x_pos: -550, y_pos: 182},
                  {x_pos: 50,   y_pos: 182},
-                 {x_pos: 700,  y_pos: 182},
+                 {x_pos: 690,  y_pos: 182},
                  {x_pos: 1200, y_pos: 182},
                  {x_pos: 1800, y_pos: 182}];
     
@@ -237,11 +237,12 @@ function startGame(){
              {x_pos: 150,  y_pos: height/2},
              {x_pos: 850,  y_pos: height/2},
              {x_pos: 1400, y_pos: height/2},
-             {x_pos: 1900, y_pos: height/2}];     
+             {x_pos: 1920, y_pos: height/2}];     
     
     platforms = [];
-    platforms.push(drawPlatform(200, floorPos_y - 100, 100));
-    platforms.push(drawPlatform(800, floorPos_y - 100, 100));
+    platforms.push(drawPlatform(700, floorPos_y - 50, 120));
+    platforms.push(drawPlatform(1250, floorPos_y - 50, 120));
+    platforms.push(drawPlatform(1770, floorPos_y - 50, 120));
     
     cloudSpeed = 3.5;   //Speed of cloud
     gravity = 5;        //value of the gravitational pull strength
