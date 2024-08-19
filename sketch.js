@@ -115,6 +115,12 @@ function draw(){
     
     //check player death
     checkPlayerDie();
+
+    for(var i = 0; i < enemies.length; i++){
+        {
+            enemies[i].draw();
+        }
+    }
     
     pop();
     
@@ -138,13 +144,6 @@ function draw(){
         return;
     }
     
-    if(flagPole.isReached){
-        noStroke();
-        textSize(32);
-        fill("red");
-        text("Level complete. Press space to continue.", width/4, height*3/5);
-        return;
-    }
 
     //gravity increase while plummeting
     if(isPlummeting){
@@ -247,6 +246,9 @@ function startGame(){
     gravity = 5;        //value of the gravitational pull strength
     speed = 10;         //value of character speed
 
+    enemies = [];
+    enemies.push(new Enermy(100, floorPos_y - 10, 100));
+
     sky = 0;            //store as time(12 am)
     peak = false;       //everytime the sun/moon peaked, this boolean changes
     day = false;        //day start as false as it is nighttime
@@ -297,6 +299,38 @@ function checkFlagPole(){
     if(abs(flagPole.x_pos - gameChar_world_x) < 20){
         flagPole.isReached = true;
     }
+}
+
+
+function Enermy(x, y, range){
+    this.x = x;
+    this.y = y;
+    this.range = range;
+
+    this.currentX = x;
+    this.inc = 1;
+
+    this.update = function(){
+        currentX += this.inc;
+
+        if(this.currentX >=  this.x + this.range){
+            this.inc = -1;
+        }
+        else if(this.currentX < this.x){
+            this.inc = 1;
+        }
+
+        this.draw = function(){
+            this.update();
+            fill(255,0,0);
+            ellipse(this.x,this.y,20,20);
+        }
+
+        this.checkContact = function(){
+
+        }
+    }
+
 }
 
 
@@ -371,7 +405,7 @@ function keyPressed(){
         if(keyCode == 39){
             isRight = true;
         }
-        if(keyCode == 32  && !isFalling ){
+        if(keyCode == 32  && !isFalling){
 	//play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
             jump.play(); //play mario jumping sound
             gameChar_y -= 100; 
