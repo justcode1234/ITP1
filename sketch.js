@@ -27,8 +27,6 @@ let starY;
 var game_score;
 var flagPole;
 var lives;
-
-
 var platforms;
 
 //declare variables for sound effects
@@ -207,8 +205,6 @@ function draw(){
     
     //Update real position of gameCharX for collision detection
     gameChar_world_x = gameChar_x + cameraPosX;
-    
-
 }
 
 
@@ -224,7 +220,6 @@ function startGame(){
     isPlummeting = false;
     
     game_score = 0;
-
 
     canyons = [{x_pos: 150, width: 200}, 
                {x_pos: 700, width: 200}, 
@@ -416,32 +411,33 @@ function drawScoreBoard(){
     text(game_score,cameraPosX + 100, floorPos_y+50);
     text("Lives: ", cameraPosX, floorPos_y+90);
     text(lives ,    cameraPosX + 100, floorPos_y+90);
+    console.log(isPlummeting);
+    console.log(lives);
+    console.log(keyCode);
 }
 
 
 // function to control the animation of the character when keys are pressed
 function keyPressed(){
     //To ensure player does not move after plummeting or "freezing controls"
-    if(!isPlummeting){
         if(keyCode == 37 && !isPlummeting){
             isLeft = true;
         }
         if(keyCode == 39 && !isPlummeting){
             isRight = true;
         }
-        if(keyCode == 32 || keyCode == 38){
-            if(!isFalling && !flagPole.isReached && lives != 0){
+        if(keyCode == 32){
+            if(!isFalling && !isPlummeting && !flagPole.isReached && lives != 0){
                 //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
                 jump.play(); //play mario jumping sound
                 gameChar_y -= 100; 
                 isFalling = true;
             }
-    }
-    else if((keyCode == 32 || keyCode == 38) && (lives == 0 || flagPole.isReached)){
-            lives = 4;
-            startGame();
-        }
-    } 
+            else if((lives == 0 || flagPole.isReached)){
+                lives = 4;
+                startGame();
+            }
+        } 
 }
 
 
