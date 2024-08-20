@@ -59,7 +59,7 @@ function setup(){
 
     // Initialize the variables
     floorPos_y = height * 3/4;
-    lives = 3; 
+    lives = 4; 
     
     startGame();
 }
@@ -119,11 +119,18 @@ function draw(){
     checkPlayerDie();
 
 
-    enemies = [];
-    enemies.push(new Enermy(100, floorPos_y - 10, 100));
+
 
     for(var i = 0; i < enemies.length; i++){
         enemies[i].draw();
+
+        var isContact = enemies[i].checkContact(gameChar_world_x, gameChar_y);
+            if(isContact){
+                if(lives > 0){
+                    startGame();
+                    break;
+                }
+            }
     }
     
     pop();
@@ -206,6 +213,7 @@ function draw(){
 
 
 function startGame(){
+
     gameChar_x = width/2;
     gameChar_y = floorPos_y;
     cameraPosX = 0;
@@ -215,11 +223,9 @@ function startGame(){
     isFalling = false;
     isPlummeting = false;
     
-    
     game_score = 0;
-    flagPole = {isReached: false, x_pos: 2400};
-    
-    
+
+
     canyons = [{x_pos: 150, width: 200}, 
                {x_pos: 700, width: 200}, 
                {x_pos: 1220,width: 200}];
@@ -232,7 +238,6 @@ function startGame(){
               {x_pos:800, y_pos: 100, size: 50},
               {x_pos:1400,y_pos: 100, size: 50}];    
     
-    
     mountains = [{x_pos: -550, y_pos: 182},
                  {x_pos: 50,   y_pos: 182},
                  {x_pos: 690,  y_pos: 182},
@@ -244,45 +249,30 @@ function startGame(){
              {x_pos: 850,  y_pos: height/2},
              {x_pos: 1400, y_pos: height/2},
              {x_pos: 1920, y_pos: height/2}];     
+
+    flagPole = {isReached: false, x_pos: 2400};
     
     platforms = [];
     platforms.push(drawPlatform(700, floorPos_y - 50, 120));
     platforms.push(drawPlatform(1250, floorPos_y - 50, 120));
     platforms.push(drawPlatform(1770, floorPos_y - 50, 120));
     
+    lives -= 1;
+    enemies = [];
+    enemies.push(new Enermy(300, floorPos_y - 10, 300));
+    enemies.push(new Enermy(900, floorPos_y - 10, 250));
+    enemies.push(new Enermy(1420, floorPos_y - 10, 250));
+    enemies.push(new Enermy(1970, floorPos_y - 10, 250));
+
+
     cloudSpeed = 3.5;   //Speed of cloud
     gravity = 5;        //value of the gravitational pull strength
     speed = 10;         //value of character speed
-
-    
 
     sky = 0;            //store as time(12 am)
     peak = false;       //everytime the sun/moon peaked, this boolean changes
     day = false;        //day start as false as it is nighttime
     death = true;
-}
-
-
-function drawPlatform(x, y, length){
-    var p = {
-        x: x,
-        y: y,
-        length: length,
-        draw: function(){
-            fill(0);
-            rect(this.x, this.y, this.length, 20);
-        },
-        checkContact: function(gc_x, gc_y){
-            if(gc_x > this.x && gc_x < this.x + this.length){
-                var d = this.y - gameChar_y;
-                if(d >= 0 && d<5){
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-    return p;
 }
 
 
@@ -314,6 +304,29 @@ function checkFlagPole(){
 }
 
 
+function drawPlatform(x, y, length){
+    var p = {
+        x: x,
+        y: y,
+        length: length,
+        draw: function(){
+            fill(0);
+            rect(this.x, this.y, this.length, 20);
+        },
+        checkContact: function(gc_x, gc_y){
+            if(gc_x > this.x && gc_x < this.x + this.length){
+                var d = this.y - gameChar_y;
+                if(d >= 0 && d<5){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    return p;
+}
+
+
 function Enermy(x, y, range){
     this.x = x;
     this.y = y;
@@ -339,15 +352,18 @@ function Enermy(x, y, range){
         ellipse(this.currentX,this.y,20,20);
     }
 
-    this.checkContact = function(){
-
+    this.checkContact = function(gc_x,gc_y){
+        var d = dist(gc_x,gc_y, this.currentX, this.y);
+        if(d < 20){
+            return true;
+        }
+        return false;
     }
 }
 
 
 function checkPlayerDie(){
     if(gameChar_y > height && lives > 0){
-        lives--;
         if(lives > 0){
             startGame();
         }
@@ -406,21 +422,23 @@ function drawScoreBoard(){
 // function to control the animation of the character when keys are pressed
 function keyPressed(){
     //To ensure player does not move after plummeting or "freezing controls"
-
-    if(keyCode == 37){
-        isLeft = true;
+    if(!isPlummeting){
+        if(keyCode == 37 && !isPlummeting){
+            isLeft = true;
+        }
+        if(keyCode == 39 && !isPlummeting){
+            isRight = true;
+        }
+        if(keyCode == 32 || keyCode == 38){
+            if(!isFalling && !flagPole.isReached && lives != 0){
+                //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
+                jump.play(); //play mario jumping sound
+                gameChar_y -= 100; 
+                isFalling = true;
+            }
     }
-    if(keyCode == 39){
-        isRight = true;
-    }
-    if(keyCode == 32){
-        if(!isFalling && !isPlummeting && !flagPole.isReached){
-            //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
-            jump.play(); //play mario jumping sound
-            gameChar_y -= 100; 
-            isFalling = true;
-        } else if(lives == 0 || flagPole.isReached){
-            lives = 3;
+    else if((keyCode == 32 || keyCode == 38) && (lives == 0 || flagPole.isReached)){
+            lives = 4;
             startGame();
         }
     } 
