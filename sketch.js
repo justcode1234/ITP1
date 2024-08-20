@@ -76,6 +76,8 @@ function draw(){
     //Implement scrolling
     push();
     translate(-cameraPosX, 0);
+
+  
    
     //draw and create the interaction of the canyon 
     for(var i = 0; i<canyons.length; i++){
@@ -116,10 +118,12 @@ function draw(){
     //check player death
     checkPlayerDie();
 
+
+    enemies = [];
+    enemies.push(new Enermy(100, floorPos_y - 10, 100));
+
     for(var i = 0; i < enemies.length; i++){
-        {
-            enemies[i].draw();
-        }
+        enemies[i].draw();
     }
     
     pop();
@@ -143,7 +147,12 @@ function draw(){
         text("Press space to restart", width/3, height*1.1/2);
         return;
     }
+
     
+    if(!flagPole.isReached){
+        checkFlagPole();
+    }
+
 
     //gravity increase while plummeting
     if(isPlummeting){
@@ -192,9 +201,7 @@ function draw(){
     //Update real position of gameCharX for collision detection
     gameChar_world_x = gameChar_x + cameraPosX;
     
-    if(!flagPole.isReached){
-        checkFlagPole();
-    }
+
 }
 
 
@@ -247,8 +254,7 @@ function startGame(){
     gravity = 5;        //value of the gravitational pull strength
     speed = 10;         //value of character speed
 
-    enemies = [];
-    enemies.push(new Enermy(100, floorPos_y - 10, 100));
+    
 
     sky = 0;            //store as time(12 am)
     peak = false;       //everytime the sun/moon peaked, this boolean changes
@@ -289,6 +295,11 @@ function renderFlagPole(){
     fill(255,0,0);
     if(flagPole.isReached){
         rect(flagPole.x_pos,floorPos_y-250,50,50);
+        textSize(48);
+        fill("Black");
+        text("Level Complete", gameChar_world_x, height-80);
+        textSize(32);
+        text("Press space to restart", gameChar_world_x, height-40);
     } else {
         rect(flagPole.x_pos,floorPos_y-50,50,50);
     }
@@ -312,7 +323,7 @@ function Enermy(x, y, range){
     this.inc = 1;
 
     this.update = function(){
-        currentX += this.inc;
+        this.currentX += this.inc;
 
         if(this.currentX >=  this.x + this.range){
             this.inc = -1;
@@ -320,18 +331,17 @@ function Enermy(x, y, range){
         else if(this.currentX < this.x){
             this.inc = 1;
         }
-
-        this.draw = function(){
-            this.update();
-            fill(255,0,0);
-            ellipse(this.x,this.y,20,20);
-        }
-
-        this.checkContact = function(){
-
-        }
     }
 
+    this.draw = function(){
+        this.update();
+        fill(255,0,0);
+        ellipse(this.currentX,this.y,20,20);
+    }
+
+    this.checkContact = function(){
+
+    }
 }
 
 
@@ -353,7 +363,6 @@ function drawCollectable(t_collectable){
         fill(255); 
         rect(t_collectable.x_pos-10+gameChar_x,290,20,20);
     }
-    
 }
 
 
@@ -362,7 +371,6 @@ function checkCollectable(t_collectable){
     if(dist(cameraPosX, gameChar_y - 65 ,t_collectable.x_pos, 300) < 50){  
         t_collectable.isFound = true;
         game_score++;
-        
     }
 }
 
@@ -398,33 +406,29 @@ function drawScoreBoard(){
 // function to control the animation of the character when keys are pressed
 function keyPressed(){
     //To ensure player does not move after plummeting or "freezing controls"
-    if(!isPlummeting && lives>0 && !flagPole.isReached){
-        
-        if(keyCode == 37){
-            isLeft = true;
-        }
-        if(keyCode == 39){
-            isRight = true;
-        }
-        if(keyCode == 32  && !isFalling){
-	//play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
+
+    if(keyCode == 37){
+        isLeft = true;
+    }
+    if(keyCode == 39){
+        isRight = true;
+    }
+    if(keyCode == 32){
+        if(!isFalling && !isPlummeting && !flagPole.isReached){
+            //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
             jump.play(); //play mario jumping sound
             gameChar_y -= 100; 
             isFalling = true;
-        }
-    } else if(lives == 0 || flagPole.isReached){
-        if(keyCode == 32){
+        } else if(lives == 0 || flagPole.isReached){
             lives = 3;
             startGame();
         }
-    }
+    } 
 }
 
 
 // function to update the animation of the character when keys are released.
-function keyReleased(){
-    if(!flagPole.isReached){
-        
+function keyReleased(){  
         if(keyCode == 37){
             isLeft = false;
         }
@@ -432,7 +436,6 @@ function keyReleased(){
         if(keyCode == 39){
             isRight = false;
         }
-    }
 }
 
 
