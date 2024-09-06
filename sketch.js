@@ -21,8 +21,8 @@ var speed;
 var sky;
 var peak;
 var day;
-let starX; 
-let starY;
+var starX; 
+var starY;
 
 var game_score;
 var flagPole;
@@ -30,25 +30,27 @@ var lives;
 var platforms;
 
 //declare variables for sound effects
-let gameover;
-let jump;
-let morning;
+var gameover;
+var jump;
+var morning;
 var death;
+var backgroundmusic;
+var footsteps;
 
-
-// referenced from https://archive.p5js.org/reference/#/p5/loadSound
-//assistance from P5.js examples 
 function preload() {
     soundFormats('mp3');
-    gameover = loadSound('sound/wasted.mp3'); //load player death sound effect from GTA
-    jump = loadSound('sound/jump.mp3');       //load sound effect when mario jumps
-    morning = loadSound('sound/rooster.mp3'); //load sound effect when it becomes daytime
-    
+    gameover = loadSound('sound/wasted.mp3');           //load player death sound effect from GTA
+    jump = loadSound('sound/jump.mp3');                 //load sound effect when mario jumps
+    footsteps = loadSound('sound/footsteps.mp3');       //load sound effect for walking
+    morning = loadSound('sound/rooster.mp3');           //load sound effect when it becomes daytime
+    backgroundmusic = loadSound('sound/minecraft.mp3'); //load minecraft background sound
+
     //change volume of sound effect
     // referenced from https://archive.p5js.org/reference/#/p5.SoundFile/setVolume
     gameover.setVolume(1.0); 
     jump.setVolume(0.1);
-    morning.setVolume(1.0);
+    morning.setVolume(0.7);
+    backgroundmusic.setVolume(0.8);
   }
 
 
@@ -58,7 +60,7 @@ function setup(){
     // Initialize the variables
     floorPos_y = height * 3/4;
     lives = 4; 
-    
+    backgroundmusic.loop();     //play background sound
     startGame();
 }
 
@@ -138,7 +140,6 @@ function draw(){
     
     if(lives == 0){
         if(death){
-            //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
             gameover.play();    //Play sound when plummeting
             death = false;
         }
@@ -182,6 +183,7 @@ function draw(){
         }else{
             isFalling = false;  
         }
+
     }else{
         isFalling = false;  
     }
@@ -407,13 +409,10 @@ function drawScoreBoard(){
     fill(255);
     stroke(0);
     strokeWeight(4);
-    text("Score: ", cameraPosX, floorPos_y+50);
-    text(game_score,cameraPosX + 100, floorPos_y+50);
-    text("Lives: ", cameraPosX, floorPos_y+90);
-    text(lives ,    cameraPosX + 100, floorPos_y+90);
-    console.log(isPlummeting);
-    console.log(lives);
-    console.log(keyCode);
+    text("Score: ", cameraPosX, floorPos_y + 50);
+    text(game_score,cameraPosX + 100, floorPos_y + 50);
+    text("Lives: ", cameraPosX, floorPos_y + 90);
+    text(lives ,    cameraPosX + 100, floorPos_y + 90);
 }
 
 
@@ -421,14 +420,15 @@ function drawScoreBoard(){
 function keyPressed(){
     //To ensure player does not move after plummeting or "freezing controls"
         if(keyCode == 37 && !isPlummeting){
+            footsteps.play();
             isLeft = true;
         }
         if(keyCode == 39 && !isPlummeting){
+            footsteps.play();
             isRight = true;
         }
         if(keyCode == 32){
             if(!isFalling && !isPlummeting && !flagPole.isReached && lives != 0){
-                //play sound referenced from: https://archive.p5js.org/examples/sound-load-and-play-sound.html
                 jump.play(); //play mario jumping sound
                 gameChar_y -= 100; 
                 isFalling = true;
@@ -444,12 +444,14 @@ function keyPressed(){
 // function to update the animation of the character when keys are released.
 function keyReleased(){  
         if(keyCode == 37){
+            footsteps.pause();
             isLeft = false;
         }
         
         if(keyCode == 39){
+            footsteps.pause();
             isRight = false;
-        }
+         }
 }
 
 
@@ -525,7 +527,7 @@ function drawTrees(){
 
 
 function drawBackgroundAndSky(){
-        //draw the sky that dynamically changes as time goes by
+    //draw the sky that dynamically changes as time goes by
     //inspired after doing Coursera Programming exercise 7. Hack it: Sunrise
     if(peak == false){
         sky += 0.004;
@@ -576,99 +578,99 @@ function drawBackgroundAndSky(){
 
 
 function drawCharacter(){
+
     //game character
-
-if(isLeft && isFalling)		//Jumping left model
-{
-    fill(0);
-    quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-15,gameChar_y-10,gameChar_x-25,gameChar_y-10);
-    quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-15,gameChar_y,gameChar_x-5,gameChar_y);
-    rect(gameChar_x-5,gameChar_y-50,25,10);
-    rect(gameChar_x-5,gameChar_y-60,10,30);
-    ellipse(gameChar_x,gameChar_y-65,20,20);
-    fill(255,0,0);
-    rect(gameChar_x-10,gameChar_y-70,10,5);
-    rect(gameChar_x+20,gameChar_y-35,5,20);
-    fill(200);
-    rect(gameChar_x+20,gameChar_y-55,5,20);
-}
-
-
-else if(isRight && isFalling)	//Jumping right model
-{    
-    fill(0);
-    quad(gameChar_x+2,gameChar_y-35,gameChar_x-5,gameChar_y-35,gameChar_x+15,gameChar_y-10,gameChar_x+25,gameChar_y-20);
-    quad(gameChar_x+2,gameChar_y-30,gameChar_x-5,gameChar_y-30,gameChar_x+10,gameChar_y-15,gameChar_x+20,gameChar_y-15);
-    rect(gameChar_x-5,gameChar_y-50,25,10);
-    rect(gameChar_x-5,gameChar_y-60,10,30);
-    ellipse(gameChar_x,gameChar_y-65,20,20);
-    fill(255,0,0);
-    rect(gameChar_x,gameChar_y-70,10,5);
-    rect(gameChar_x+20,gameChar_y-75,5,20);
-    fill(200);
-    rect(gameChar_x+20,gameChar_y-55,5,20);
-}   
+    if(isLeft && isFalling)		//Jumping left model
+    {
+        fill(0);
+        quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-15,gameChar_y-10,gameChar_x-25,gameChar_y-10);
+        quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-15,gameChar_y,gameChar_x-5,gameChar_y);
+        rect(gameChar_x-5,gameChar_y-50,25,10);
+        rect(gameChar_x-5,gameChar_y-60,10,30);
+        ellipse(gameChar_x,gameChar_y-65,20,20);
+        fill(255,0,0);
+        rect(gameChar_x-10,gameChar_y-70,10,5);
+        rect(gameChar_x+20,gameChar_y-35,5,20);
+        fill(200);
+        rect(gameChar_x+20,gameChar_y-55,5,20);
+    }
 
 
-else if(isLeft)		//Walking left model
-{
-    fill(0);
-    quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-10,gameChar_y,gameChar_x-20,gameChar_y);
-    quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x,gameChar_y,gameChar_x+10,gameChar_y);
-    rect(gameChar_x-15,gameChar_y-50,20,10);
-    rect(gameChar_x-5,gameChar_y-60,10,30);
-    ellipse(gameChar_x,gameChar_y-65,20,20);
-    fill(255,0,0);
-    rect(gameChar_x-10,gameChar_y-70,10,5);
-    rect(gameChar_x-20,gameChar_y-75,5,20);
-    fill(200);
-    rect(gameChar_x-20,gameChar_y-55,5,20);
-}
+    else if(isRight && isFalling)	//Jumping right model
+    {    
+        fill(0);
+        quad(gameChar_x+2,gameChar_y-35,gameChar_x-5,gameChar_y-35,gameChar_x+15,gameChar_y-10,gameChar_x+25,gameChar_y-20);
+        quad(gameChar_x+2,gameChar_y-30,gameChar_x-5,gameChar_y-30,gameChar_x+10,gameChar_y-15,gameChar_x+20,gameChar_y-15);
+        rect(gameChar_x-5,gameChar_y-50,25,10);
+        rect(gameChar_x-5,gameChar_y-60,10,30);
+        ellipse(gameChar_x,gameChar_y-65,20,20);
+        fill(255,0,0);
+        rect(gameChar_x,gameChar_y-70,10,5);
+        rect(gameChar_x+20,gameChar_y-75,5,20);
+        fill(200);
+        rect(gameChar_x+20,gameChar_y-55,5,20);
+    }   
 
 
-else if(isRight)		//Waling Right model
-{
-    fill(0);
-    quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x,gameChar_y,gameChar_x-10,gameChar_y);
-    quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x+10,gameChar_y,gameChar_x+20,gameChar_y);
-    rect(gameChar_x-5,gameChar_y-50,25,10);
-    rect(gameChar_x-5,gameChar_y-60,10,30);
-    ellipse(gameChar_x,gameChar_y-65,20,20);
-    fill(255,0,0);
-    rect(gameChar_x,gameChar_y-70,10,5);
-    rect(gameChar_x+20,gameChar_y-75,5,20);
-    fill(200);
-    rect(gameChar_x+20,gameChar_y-55,5,20);
-}
+    else if(isLeft)		//Walking left model
+    {
+        fill(0);
+        quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-10,gameChar_y,gameChar_x-20,gameChar_y);
+        quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x,gameChar_y,gameChar_x+10,gameChar_y);
+        rect(gameChar_x-15,gameChar_y-50,20,10);
+        rect(gameChar_x-5,gameChar_y-60,10,30);
+        ellipse(gameChar_x,gameChar_y-65,20,20);
+        fill(255,0,0);
+        rect(gameChar_x-10,gameChar_y-70,10,5);
+        rect(gameChar_x-20,gameChar_y-75,5,20);
+        fill(200);
+        rect(gameChar_x-20,gameChar_y-55,5,20);
+    }
 
 
-else if(isFalling || isPlummeting)	//Jumping front model
-{
-    fill(0);
-    quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-15,gameChar_y-10,gameChar_x-25,gameChar_y-10);
-    quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x+15,gameChar_y-10,gameChar_x+25,gameChar_y-10);
-    rect(gameChar_x-15,gameChar_y-50,35,10);
-    rect(gameChar_x-5,gameChar_y-60,10,30);
-    ellipse(gameChar_x,gameChar_y-65,20,20);
-    fill(255,0,0);
-    rect(gameChar_x-10,gameChar_y-70,20,5);
-    fill(200);
-    rect(gameChar_x-20,gameChar_y-55,5,20);
-}
+    else if(isRight)		//Waling Right model
+    {
+        fill(0);
+        quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x,gameChar_y,gameChar_x-10,gameChar_y);
+        quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x+10,gameChar_y,gameChar_x+20,gameChar_y);
+        rect(gameChar_x-5,gameChar_y-50,25,10);
+        rect(gameChar_x-5,gameChar_y-60,10,30);
+        ellipse(gameChar_x,gameChar_y-65,20,20);
+        fill(255,0,0);
+        rect(gameChar_x,gameChar_y-70,10,5);
+        rect(gameChar_x+20,gameChar_y-75,5,20);
+        fill(200);
+        rect(gameChar_x+20,gameChar_y-55,5,20);
+    }
 
 
-else	//facing front model
-{
-    fill(0);
-    quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-10,gameChar_y,gameChar_x-20,gameChar_y);
-    quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x+10,gameChar_y,gameChar_x+20,gameChar_y);
-    rect(gameChar_x-15,gameChar_y-50,35,10);
-    rect(gameChar_x-5,gameChar_y-60,10,30);
-    ellipse(gameChar_x,gameChar_y-65,20,20);
-    fill(255,0,0);
-    rect(gameChar_x-10,gameChar_y-70,20,5);
-    rect(gameChar_x-20,gameChar_y-75,5,20);
-    fill(200);
-    rect(gameChar_x-20,gameChar_y-55,5,20);
-}
+    else if(isFalling || isPlummeting)	//Jumping front model
+    {
+        fill(0);
+        quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-15,gameChar_y-10,gameChar_x-25,gameChar_y-10);
+        quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x+15,gameChar_y-10,gameChar_x+25,gameChar_y-10);
+        rect(gameChar_x-15,gameChar_y-50,35,10);
+        rect(gameChar_x-5,gameChar_y-60,10,30);
+        ellipse(gameChar_x,gameChar_y-65,20,20);
+        fill(255,0,0);
+        rect(gameChar_x-10,gameChar_y-70,20,5);
+        fill(200);
+        rect(gameChar_x-20,gameChar_y-55,5,20);
+    }
+
+
+    else	//facing front model
+    {
+        fill(0);
+        quad(gameChar_x-5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x-10,gameChar_y,gameChar_x-20,gameChar_y);
+        quad(gameChar_x+5,gameChar_y-30,gameChar_x,gameChar_y-30,gameChar_x+10,gameChar_y,gameChar_x+20,gameChar_y);
+        rect(gameChar_x-15,gameChar_y-50,35,10);
+        rect(gameChar_x-5,gameChar_y-60,10,30);
+        ellipse(gameChar_x,gameChar_y-65,20,20);
+        fill(255,0,0);
+        rect(gameChar_x-10,gameChar_y-70,20,5);
+        rect(gameChar_x-20,gameChar_y-75,5,20);
+        fill(200);
+        rect(gameChar_x-20,gameChar_y-55,5,20);
+    }
 }
