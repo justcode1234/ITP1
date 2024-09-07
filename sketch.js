@@ -28,6 +28,7 @@ var game_score;
 var flagPole;
 var lives;
 var platforms;
+var level;
 
 //declare variables for sound effects
 var gameover;
@@ -60,6 +61,7 @@ function setup(){
     // Initialize the variables
     floorPos_y = height * 3/4;
     lives = 4; 
+    level = 0;
     backgroundmusic.loop();     //play background sound
     startGame();
 }
@@ -126,9 +128,12 @@ function draw(){
 
         var isContact = enemies[i].checkContact(gameChar_world_x, gameChar_y);
             if(isContact){
-                if(lives > 0){
+                if(lives > 0 && level == 0){
                     startGame();
                     break;
+                }
+                else if(lives > 0 && level == 1){
+                    startChallengingGame();
                 }
             }
     }
@@ -273,6 +278,69 @@ function startGame(){
 }
 
 
+function startChallengingGame(){
+
+    gameChar_x = width/2;
+    gameChar_y = floorPos_y;
+    cameraPosX = 0;
+    
+    isLeft = false;
+    isRight = false;
+    isFalling = false;
+    isPlummeting = false;
+    
+    game_score = 0;
+
+    canyons = [{x_pos: 150, width: 200}, 
+               {x_pos: 700, width: 200}, 
+               {x_pos: 1220,width: 200}];
+    
+    collectables = [{x_pos: 250, isFound: false},
+                    {x_pos: 800, isFound: false},
+                    {x_pos: 1300, isFound: false}];    
+    
+    clouds = [{x_pos:200, y_pos: 100, size: 50},
+              {x_pos:800, y_pos: 100, size: 50},
+              {x_pos:1400,y_pos: 100, size: 50}];    
+    
+    mountains = [{x_pos: -550, y_pos: 182},
+                 {x_pos: 50,   y_pos: 182},
+                 {x_pos: 690,  y_pos: 182},
+                 {x_pos: 1200, y_pos: 182},
+                 {x_pos: 1800, y_pos: 182}];
+    
+    trees = [{x_pos: -600, y_pos: height/2},
+             {x_pos: 150,  y_pos: height/2},
+             {x_pos: 850,  y_pos: height/2},
+             {x_pos: 1400, y_pos: height/2},
+             {x_pos: 1920, y_pos: height/2}];     
+
+    flagPole = {isReached: false, x_pos: 2400};
+    
+    platforms = [];
+    platforms.push(drawPlatform(700, floorPos_y - 50, 120));
+    platforms.push(drawPlatform(1250, floorPos_y - 50, 120));
+    platforms.push(drawPlatform(1770, floorPos_y - 50, 120));
+    
+    lives -= 1;
+    enemies = [];
+    enemies.push(new Enermy(300, floorPos_y - 10, 300));
+    enemies.push(new Enermy(900, floorPos_y - 10, 250));
+    enemies.push(new Enermy(1420, floorPos_y - 10, 250));
+    enemies.push(new Enermy(1970, floorPos_y - 10, 250));
+
+
+    cloudSpeed = 3.5;   //Speed of cloud
+    gravity = 5;        //value of the gravitational pull strength
+    speed = 5;         //value of character speed
+
+    sky = 0;            //store as time(12 am)
+    peak = false;       //everytime the sun/moon peaked, this boolean changes
+    day = false;        //day start as false as it is nighttime
+    death = true;
+}
+
+
 function renderFlagPole(){
     push();
     strokeWeight(5);
@@ -361,8 +429,11 @@ function Enermy(x, y, range){
 
 function checkPlayerDie(){
     if(gameChar_y > height && lives > 0){
-        if(lives > 0){
+        if(lives > 0 && level == 0){
             startGame();
+        }
+        if(lives > 0 && level == 1){
+            startChallengingGame();
         }
     }
 }
@@ -420,11 +491,11 @@ function drawScoreBoard(){
 function keyPressed(){
     //To ensure player does not move after plummeting or "freezing controls"
         if(keyCode == 37 && !isPlummeting){
-            footsteps.play();
+            footsteps.loop();
             isLeft = true;
         }
         if(keyCode == 39 && !isPlummeting){
-            footsteps.play();
+            footsteps.loop();
             isRight = true;
         }
         if(keyCode == 32){
@@ -434,10 +505,18 @@ function keyPressed(){
                 isFalling = true;
             }
             else if((lives == 0 || flagPole.isReached)){
+                level = 0;
                 lives = 4;
                 startGame();
             }
         } 
+        if(keyCode == 76){
+            if((flagPole.isReached)){
+                level = 1;
+                lives = 3;
+                startChallengingGame();
+            }
+        }
 }
 
 
