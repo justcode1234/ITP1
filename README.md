@@ -1,0 +1,7 @@
+, in which I got 60% :(  
+
+General Feedback:  
+  - lack of advance coding techniques
+  - game interactions abit buggy
+  - could improve on code presentation
+  - add better levels
