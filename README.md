@@ -1,4 +1,4 @@
-This is the project work that I submitted for ITP1, in which I got 60% :(  
+This is the project work that I submitted for ITP1, in which I got C :(  
 
 General Feedback:  
   - lack of advance coding techniques
